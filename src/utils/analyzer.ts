@@ -205,8 +205,10 @@ export const analyzeData = (rows: any[][]): AnalysisResult => {
     let status: 'Pass' | 'Arrear' | 'N/A' = 'N/A';
 
     if (totalAttemptedCredits > 0) {
-      sgpa = Math.round((totalGpCredits / totalAttemptedCredits) * 100) / 100;
       status = arrearsCount === 0 ? 'Pass' : 'Arrear';
+      if (status === 'Pass') {
+        sgpa = Math.round((totalGpCredits / totalAttemptedCredits) * 100) / 100;
+      }
     }
 
     students.push({

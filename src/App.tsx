@@ -142,7 +142,7 @@ export default function App() {
     const worksheet = XLSX.utils.json_to_sheet(exportRows);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Calculated SGPA Ranks');
-    
+
     // Auto-fit column widths
     const maxLens = Object.keys(exportRows[0] || {}).map(key => {
       let maxLen = key.length;
@@ -223,20 +223,20 @@ export default function App() {
   // Filtering
   const filteredStudents = data
     ? getSortedStudents(
-        data.students.filter(student => {
-          const matchesSearch =
-            student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            student.regNo.includes(searchQuery);
-          
-          const matchesStatus =
-            statusFilter === 'All' ||
-            (statusFilter === 'Pass' && student.status === 'Pass') ||
-            (statusFilter === 'Arrear' && student.status === 'Arrear') ||
-            (statusFilter === 'N/A' && student.status === 'N/A');
+      data.students.filter(student => {
+        const matchesSearch =
+          student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          student.regNo.includes(searchQuery);
 
-          return matchesSearch && matchesStatus;
-        })
-      )
+        const matchesStatus =
+          statusFilter === 'All' ||
+          (statusFilter === 'Pass' && student.status === 'Pass') ||
+          (statusFilter === 'Arrear' && student.status === 'Arrear') ||
+          (statusFilter === 'N/A' && student.status === 'N/A');
+
+        return matchesSearch && matchesStatus;
+      })
+    )
     : [];
 
   // Theme colors for charts
@@ -261,8 +261,8 @@ export default function App() {
         <div className="header-title-area">
           <h1>Anna University Semester Result Analyzer</h1>
           <p>
-            {data && file 
-              ? `Currently analyzing: ${file.name}` 
+            {data && file
+              ? `Currently analyzing: ${file.name}`
               : "Instantly calculate SGPAs, assign ranks, and extract class-wide statistics (Regulation 2021)"}
           </p>
         </div>
@@ -331,6 +331,15 @@ export default function App() {
               </button>
             </div>
           </div>
+
+          {/* Developer Signature */}
+          <div style={{ marginTop: '-2.5rem', marginBottom: '4rem', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+            <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)' }}>Developed by:</span>
+            <div className="glass-card" style={{ padding: '0.4rem 0.85rem', borderRadius: '20px', border: '1px solid rgba(99, 102, 241, 0.25)', background: 'rgba(99, 102, 241, 0.05)', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 0 15px rgba(99, 102, 241, 0.1)' }}>
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 8px var(--primary)' }}></div>
+              <span style={{ fontWeight: '700', color: '#fff', fontSize: '0.85rem', letterSpacing: '0.05em' }}>GOPALAN S</span>
+            </div>
+          </div>
         </div>
       )}
 
@@ -350,7 +359,7 @@ export default function App() {
       {/* DASHBOARD SCREEN */}
       {data && (
         <main className="dashboard-grid animate-fade-in">
-          
+
           {/* KPI SUMMARY CARDS */}
           <section className="kpi-row">
             <div className="kpi-card glass-card">
@@ -395,8 +404,8 @@ export default function App() {
               <div className="kpi-info" style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 <h4>Class Topper(s)</h4>
                 <p style={{ fontSize: '1.25rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {data.analytics.toppers.length > 0 
-                    ? data.analytics.toppers.map(t => `${t.name} (${t.sgpa?.toFixed(2)})`).join(', ') 
+                  {data.analytics.toppers.length > 0
+                    ? data.analytics.toppers.map(t => `${t.name} (${t.sgpa?.toFixed(2)})`).join(', ')
                     : 'N/A'}
                 </p>
                 <div className="kpi-subtext">Highest SGPA in class</div>
@@ -415,7 +424,7 @@ export default function App() {
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                     <XAxis dataKey="grade" stroke="var(--text-secondary)" fontSize={11} />
                     <YAxis stroke="var(--text-secondary)" fontSize={11} allowDecimals={false} />
-                    <ChartTooltip 
+                    <ChartTooltip
                       contentStyle={{ background: '#0d1426', borderColor: 'var(--border-color)', borderRadius: '8px' }}
                       labelStyle={{ color: '#fff', fontWeight: 'bold' }}
                     />
@@ -438,7 +447,7 @@ export default function App() {
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                     <XAxis dataKey="arrears" stroke="var(--text-secondary)" fontSize={11} />
                     <YAxis stroke="var(--text-secondary)" fontSize={11} allowDecimals={false} />
-                    <ChartTooltip 
+                    <ChartTooltip
                       contentStyle={{ background: '#0d1426', borderColor: 'var(--border-color)', borderRadius: '8px' }}
                       labelStyle={{ color: '#fff', fontWeight: 'bold' }}
                     />
@@ -580,7 +589,7 @@ export default function App() {
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>* Click table headers to sort</span>
               </div>
             </div>
-            
+
             <div className="table-responsive">
               <table className="students-data-table">
                 <thead>
@@ -641,8 +650,8 @@ export default function App() {
                               )}
                             </div>
                           </td>
-                          <td style={{ fontWeight: '700', fontSize: '1rem' }}>
-                            {student.sgpa !== null ? student.sgpa.toFixed(2) : 'N/A'}
+                          <td style={{ fontWeight: '700', fontSize: '1rem', color: student.sgpa === null ? 'var(--danger-text)' : 'inherit' }}>
+                            {student.sgpa !== null ? student.sgpa.toFixed(2) : '-'}
                           </td>
                           <td>
                             <span style={{ color: '#fff', fontWeight: '500' }}>{student.earnedCredits}</span>

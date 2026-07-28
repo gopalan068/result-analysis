@@ -20,7 +20,7 @@ export const generateSampleExcel = () => {
     ['312221104009', 'SANJAY SUBRAMANIAN', 'A+', 'O', 'A', 'A+', 'A+', 'A', 'O', 'A', 'B', ''],
     ['312221104010', 'VIKRAM SENTHIL', 'U', 'RA', 'U', 'U', 'U', 'U', 'U', 'U', '', ''],
     // Student with an unrecognized grade (warning demo)
-    ['312221104011', 'YASMIN BEGUM (WARNING DEMO)', 'A+', 'A', 'A++', 'O', 'B+', 'A+', 'A', 'B', 'O', ''],
+    ['312221104011', 'YASMIN BEGUM (WARNING DEMO)', 'A+', 'A', 'A+', 'O', 'B+', 'A+', 'A', 'B', 'O', ''],
     // Student with no registered exams (empty demo)
     ['312221104012', 'ZACHARY MILLER (EMPTY DEMO)', '', '', '', '', '', '', '', '', '', ''],
     // Junk trailing rows to verify parsing robustness
@@ -33,7 +33,7 @@ export const generateSampleExcel = () => {
   const worksheet = XLSX.utils.aoa_to_sheet(data);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Semester Results');
-  
+
   // Write and download
   XLSX.writeFile(workbook, 'Anna_University_Semester_Results_Sample.xlsx');
 };
